@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <title>阴阳历算法实现(1) -- 阳历转阴(农)历 | Stone&#39;s Blog</title>
+  <title>阴阳历算法实现(2) -- 阴(农)历转阳历 | Stone&#39;s Blog</title>
   <meta name="description" content="" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="MobileOptimized" content="320" />
@@ -197,7 +197,7 @@
                 
                 <div id="nav-container">
                     <div class="post-navbar" style="line-height: 63px;display:none">
-                        <li id="navbar-title"><a href="#">阴阳历算法实现(1) -- 阳历转阴(农)历</a></li>
+                        <li id="navbar-title"><a href="#">阴阳历算法实现(2) -- 阴(农)历转阳历</a></li>
                         <li id="navbar-toc" style="border-left: none">
                             <a style="padding-right: 15px">
                                 <span id="toc-content" >Introduction</span><i class="fa fa-chevron-down" ></i>
@@ -234,7 +234,7 @@
                       
                       
                   </div>
-                <h1 class="post-title" style="margin: 14px 0;color:#50585D">阴阳历算法实现(1) -- 阳历转阴(农)历</h1>
+                <h1 class="post-title" style="margin: 14px 0;color:#50585D">阴阳历算法实现(2) -- 阴(农)历转阳历</h1>
 
                     <div class="post-meta">
                         Post on<span class="fa fa-clock-o"></span>
@@ -244,11 +244,9 @@
     </span>
 
         <section class="post-content">
-            <h2 id="阳历转阴(农)历">阳历转阴(农)历</h2>
-<h4 id="实现背景"><strong>实现背景</strong></h4>
-<p> 本人一年前实习时候参与过一个API项目,其中就包括实现阴阳历互换API接口,调研过一番其实现算法.时间久了算法详细过程大概忘记了,最近突然就想重新实现一次,于是又开始了.<br> 跟什么进制转换,计算器等等算法相比,阳历(即公历,就是生活中走得较快的那个全世界都在使用的日期)与阴历(即农历,旧历,就是生活中走得较慢的只有咱们中国在用的那个日期)之间的相互转换就没有一套固定的转换规律了.   对于阳历而言,其相对还算简单,大小月以及平闰年分布有规律,很方便计算,但是对于农历就相对复杂了,农历也有大小月之分,但是无平闰年之分,尤其特殊的是闰月出现的不规律,这就为算法增添了难度.但是,还是有办法实现的的!!</p>
+            <h2 id="阴(农)历转阳历">阴(农)历转阳历</h2>
 <h4 id="算法设计"><strong>算法设计</strong></h4>
-<p>由于阴阳历日期之间间隔时间的不规律性,每一年阴阳历日期之间的相差的天数都不一样,不能简单的对给定日期进行加减运算.其实最核心就是先求出所给阳历日期到当年正月初一所在日期的天数,然后再根据所求出的天数按农历时间增长规律计算就OK了.所以,要求出给定阳历日期与所求阴历日期相差的天数,需要<br>第一,需要确定所求阴历年份是与阳历年份相同还是少一年;<br>第二,找到一个中间日期作为阴阳历转换的基准,显然,春节大年初一最为适合,确定当年大年初一的阳历时间;<br>第三,确定所求年农历日期距离春节(大年初一)的具体天数;<br>第四,计算阴历月日.<br>    显然,四步当中,第二步最为艰难,怎样确定大年初一的阳历时间呢?没有能确定的规则,只能将每年正月初一的阳历日期预先存储起来<br>接下来,就为了确定农历日期,便需要获取当年农历每月大小月分布情况,闰月等等,我们仍旧预先存储.从空间和常用角度考虑,我们只需用十六进制存储,而且存储1901-2099之间两百年就够了.农历日期结构设计如下:</p>
+<p>上篇讲到了阳历转阴历，我们先求出阳历日期到正月初一之间的间隔天数，这个间隔天数在阳历和阴历的增长中都是一样的，我们可以以其作为中间桥梁来进行转换．这种方式在农历转阳历中同样适用，但是由于农历的闰月存在，比如XX年Y月有闰月存在，即XX年有两个X月，所以我们必须在算法输入的时候明确指定求的是X月，还是X的闰月，然后计算对应的阳历日期．上篇中的数据结构依旧有用，如下:</p>
 <pre><code>LUNAR_CALENDAR_TABLE = [  
 <span class="number">0x04AE53</span>,<span class="number">0x0A5748</span>,<span class="number">0x5526BD</span>,<span class="number">0x0D2650</span>,<span class="number">0x0D9544</span>,<span class="number">0x46AAB9</span>,<span class="number">0x056A4D</span>,<span class="number">0x09AD42</span>,<span class="number">0x24AEB6</span>,<span class="number">0x04AE4A</span>, # //*<span class="number">1901</span>-<span class="number">1910</span>*/  
 <span class="number">0x6A4DBE</span>,<span class="number">0x0A4D52</span>,<span class="number">0x0D2546</span>,<span class="number">0x5D52BA</span>,<span class="number">0x0B544E</span>,<span class="number">0x0D6A43</span>,<span class="number">0x296D37</span>,<span class="number">0x095B4B</span>,<span class="number">0x749BC1</span>,<span class="number">0x049754</span>, # //*<span class="number">1911</span>-<span class="number">1920</span>*/  
@@ -270,7 +268,7 @@
 <span class="number">0x8A95BF</span>,<span class="number">0x0A9553</span>,<span class="number">0x0B4A47</span>,<span class="number">0x6B553B</span>,<span class="number">0x0AD54F</span>,<span class="number">0x055A45</span>,<span class="number">0x4A5D38</span>,<span class="number">0x0A5B4C</span>,<span class="number">0x052B42</span>,<span class="number">0x3A93B6</span>, # //*<span class="number">2071</span>-<span class="number">2080</span>*/  
 <span class="number">0x069349</span>,<span class="number">0x7729BD</span>,<span class="number">0x06AA51</span>,<span class="number">0x0AD546</span>,<span class="number">0x54DABA</span>,<span class="number">0x04B64E</span>,<span class="number">0x0A5743</span>,<span class="number">0x452738</span>,<span class="number">0x0D264A</span>,<span class="number">0x8E933E</span>, # //*<span class="number">2081</span>-<span class="number">2090</span>*/  
 <span class="number">0x0D5252</span>,<span class="number">0x0DAA47</span>,<span class="number">0x66B53B</span>,<span class="number">0x056D4F</span>,<span class="number">0x04AE45</span>,<span class="number">0x4A4EB9</span>,<span class="number">0x0A4D4C</span>,<span class="number">0x0D1541</span>,<span class="number">0x2D92B5</span>           # //*<span class="number">2091</span>-<span class="number">2099</span>*/  
-]
+ ]
 
 # 下面的三个表格是农历数据表 LunarCalendarTable 的结构。总共使用了<span class="number">32</span>位整数的<span class="number">0</span>～<span class="number">23</span>位。
 #  
@@ -287,14 +285,7 @@
 # 存储阳历月份天数
 MONTH_DAYS = [<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>]<span class="comment">;</span>
 </code></pre><h4 id="算法实现"><strong>算法实现</strong></h4>
-<pre><code><span class="comment"># 返回阳历年份的总天数</span>
-<span class="function"><span class="keyword">def</span> <span class="title">get_syear_total_days</span><span class="params">(syear)</span>:</span>
-    <span class="keyword">if</span> (syear % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> syear % <span class="number">100</span> != <span class="number">0</span>) <span class="keyword">or</span> (syear % <span class="number">400</span> == <span class="number">0</span>):
-        <span class="keyword">return</span> <span class="number">366</span>  <span class="comment">#闰年</span>
-    <span class="keyword">else</span>:
-        <span class="keyword">return</span> <span class="number">365</span>  <span class="comment">#平年</span>
-
-<span class="comment"># 返回阳历年所给月份的总天数</span>
+<pre><code><span class="comment"># 返回阳历年所给月份的总天数</span>
 <span class="function"><span class="keyword">def</span> <span class="title">get_syear_total_month_days</span><span class="params">(syear, smonth)</span>:</span>
     days = MONTH_DAYS[smonth]    <span class="comment"># 每月总天数</span>
     <span class="keyword">if</span> (syear % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> syear % <span class="number">100</span> != <span class="number">0</span>) <span class="keyword">or</span> (syear % <span class="number">400</span> == <span class="number">0</span>):
@@ -309,97 +300,89 @@ MONTH_DAYS = [<span class="number">0</span>,<span class="number">31</span>,<span
         days += get_syear_total_month_days(syear, m)    
     <span class="keyword">return</span> days
 
-<span class="comment"># 返回所求阴历年份, 返回正月初一到所给阳历日期(对应的阴历日期)的总阴历天数</span>
-<span class="function"><span class="keyword">def</span> <span class="title">get_lunar_days_to_sday</span><span class="params">(syear, smonth, sday)</span>:</span>
-    lunar_days = <span class="number">0</span>    <span class="comment"># 总阴历天数</span>
-    lyear = syear     <span class="comment"># 阴历年份</span>
-    <span class="comment">#假设当前阳历年份和阴历年份在同一年,然后求出当前年正月初一所在日期</span>
-    spring_month = (LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span>] &amp; <span class="number">0x60</span>) &gt;&gt; <span class="number">5</span>    <span class="comment">#春节(正月)所在阳历月份</span>
-    spring_day = LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span>] &amp; <span class="number">0x1F</span>    <span class="comment">#春节(正月初一)所在阳历日期              </span>
-    <span class="comment"># 如果春节所在阳历日期在给定阳历日期之前,意味着阳历日期已翻年,阴历年份减一</span>
-    <span class="keyword">if</span> spring_month &gt; smonth <span class="keyword">or</span> (spring_month == smonth <span class="keyword">and</span> spring_day &gt;= sday):
-        lyear -= <span class="number">1</span>    <span class="comment">#阴历年份减一</span>
-        <span class="comment">#阳历年份和阴历年份不在同一年,阳历已翻年,所以需要重新获取正确(阴历)年份正月初一日期</span>
-        spring_month = (LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span> -<span class="number">1</span>] &amp; <span class="number">0x60</span>) &gt;&gt; <span class="number">5</span>    <span class="comment">#正确阴历年春节(正月)所在阳历月份</span>
-        spring_day = spring_day = LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span> -<span class="number">1</span>] &amp; <span class="number">0x1F</span>    <span class="comment">#正确阴历年春节(正月)初一所在阳历日期</span>
-        <span class="comment"># 给定日期在给定年份的总天数 + 上年(翻年前)全年总天数 - 上年(翻年前)正月初一总天数</span>
-        lunar_days = get_days_of_syear(syear, smonth, sday) + get_syear_total_days(lyear) - get_days_of_syear(lyear, spring_month, spring_day)    <span class="comment">#  </span>
-    <span class="comment"># 当前阳历年份和阴历年份在同一年,即未翻年</span>
+<span class="comment"># 判断是否为闰月，是，返回True，否，返回False</span>
+<span class="function"><span class="keyword">def</span> <span class="title">is_leap_lmonth</span><span class="params">(lyear, lmonth)</span>:</span>
+    leap_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; <span class="number">20</span>) &amp; <span class="number">0xF</span>  <span class="comment">#leap month of that year, 0 means no leap month</span>
+    <span class="keyword">if</span> leap_month != <span class="number">0</span> <span class="keyword">and</span> lmonth == leap_month:
+        <span class="keyword">return</span> <span class="keyword">True</span>
     <span class="keyword">else</span>:
-        <span class="comment"># 给定日期在给定年份的总天数 - 给定年份正月初一总天数</span>
-        lunar_days = get_days_of_syear(lyear, smonth, sday) - get_days_of_syear(lyear, spring_month, spring_day)
+        <span class="keyword">return</span> <span class="keyword">False</span>
 
-    <span class="keyword">return</span> (lyear, lunar_days)    <span class="comment"># 返回年份,日期总天数</span>
-
-
-<span class="comment"># 根据给定阳历年,月,日返回阴历日期</span>
-<span class="function"><span class="keyword">def</span> <span class="title">get_lunar_date</span><span class="params">(syear, smonth, sday)</span>:</span>
-    <span class="keyword">if</span> syear &lt; <span class="number">1901</span> <span class="keyword">or</span> syear &gt; <span class="number">2099</span>:    <span class="comment"># 如果给定年不在1901-2099之间, 罢工</span>
-        <span class="keyword">return</span>   
-
-    lyear, lunar_days = get_lunar_days_to_sday(syear, smonth, sday)    <span class="comment"># 所求阴历年, 阴历总天数</span>
-    leap_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; <span class="number">20</span>) &amp; <span class="number">0xF</span>  <span class="comment"># 闰月月份,返回0表示无闰月</span>
-
-    lmonth = lday = <span class="number">1</span>    <span class="comment"># 初始化农历月，日</span>
-    start_day_of_month = <span class="number">1</span>    <span class="comment"># 用以累加, 获取农历月份和日期</span>
+<span class="comment"># 返回至当前农历日期的总共间隔天数</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_lunar_days_to_lday</span><span class="params">(lyear, lmonth, lday, is_leap_month)</span>:</span>
+    lunar_days = <span class="number">0</span>    <span class="comment">#　正月初一到给定农历日期的总天数</span>
+    lmonth_index = lday_index = <span class="number">1</span>    <span class="comment"># 农历月份，日期遍历索引</span>
+    leap_month_days = <span class="number">0</span>    ＃ 暂存闰月前月的天数
     bits = <span class="number">19</span>    <span class="comment"># 遍历获取大小月索引, 大月:1, 小月:0</span>
-    ＃ 循环所求年农历月份
-    <span class="keyword">for</span> lmonth <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">14</span>):
-        l_big_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; bits) &amp; <span class="number">0x1</span>    <span class="comment"># 当前月大小</span>
 
-        <span class="keyword">if</span> start_day_of_month + <span class="number">29</span> + l_big_month &lt; lunar_days:
-            lmonth += <span class="number">1</span>    <span class="comment"># 月份+1</span>
-            start_day_of_month += <span class="number">29</span> + l_big_month    ＃ start_day_of_month＋当前农历月份总天数
-        <span class="keyword">else</span>:
-            lday = lunar_days - start_day_of_month    <span class="comment"># 得到所求日期</span>
-            <span class="keyword">break</span>    <span class="comment"># 结束循环 </span>
-        bits -= <span class="number">1</span>    ＃ 跳至下个月　　　　
+    <span class="comment">#　遍历月份至当前月，累加得到总间隔天数，若有闰月出现，则有三种情形：</span>
+    １.给定月份小于闰月;
+    ２.给定月份就是闰月
+    ３.给定月份在闰月之后
+    <span class="keyword">for</span> lmonth_index <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">14</span>): 
+        l_big_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; bits) &amp; <span class="number">0x1</span>　　 <span class="comment"># 当前月大小</span>
 
-    <span class="comment"># 考虑闰月</span>
-    <span class="keyword">if</span> leap_month <span class="keyword">and</span> leap_month &lt;= lmonth - <span class="number">1</span>:
-        lmonth -= <span class="number">1</span> <span class="comment">#　如果闰月，由于lmonth+=1，所以需要-=１</span>
-    is_leap_month = <span class="keyword">True</span> <span class="keyword">if</span> lmonth == leap_month <span class="keyword">else</span> <span class="keyword">False</span>    ＃闰月：返回<span class="keyword">True</span>, 非闰月：返回<span class="keyword">False</span>    
+        <span class="comment">#　农历月份所以小于给定月份，所有情况适用</span>
+        <span class="keyword">if</span> lmonth_index &lt; lmonth:　　　　
+            lunar_days += <span class="number">29</span> + l_big_month    ＃　加上当前月天数
+        <span class="comment">#　如果当前索引为闰月数字，则暂存其天数，情况２适用    </span>
+        <span class="keyword">if</span> is_leap_lmonth(lyear, lmonth_index):   
+            leap_month_days = <span class="number">29</span> + l_big_month    　 ＃ 暂存当前月(其下月为闰月)天数
+        <span class="comment">#当前索引减１月份为闰月，若又闰月出现，则索引数字表示实际月份+1，所以需要特殊处理</span>
+        <span class="keyword">if</span> is_leap_lmonth(lyear, lmonth_index - <span class="number">1</span>): 　　
+            <span class="keyword">if</span> lmonth_index - <span class="number">1</span> == lmonth <span class="keyword">and</span> is_leap_month:    <span class="comment">#情况２，给定月为闰月 </span>
+                lunar_days += leap_month_days
+                <span class="keyword">break</span>
+            <span class="keyword">if</span> lmonth_index == lmonth:　　　　<span class="comment">#　给定月份为闰月下一月</span>
+                lunar_days += <span class="number">29</span> + l_big_month    <span class="comment"># 加上当前月（闰月）天数</span>
+                <span class="keyword">break</span>    
+            <span class="keyword">if</span> lmonth_index - <span class="number">1</span> &lt; lmonth <span class="keyword">and</span> lmonth_index != lmonth:   <span class="comment"># 给定月大于闰月的下一月，即当前月份索引为实际月份+1</span>
+                lmonth += <span class="number">1</span>　　＃　索引月份+<span class="number">1</span>，则lmonth＋１进行下一轮比较
+        bits -= <span class="number">1</span>　　＃ 跳至下个月
+    lunar_days += lday　　<span class="comment"># 加上农历日期天数</span>
+    <span class="keyword">return</span> lunar_days
 
-    lunar_date_dict = {<span class="string">"lyear"</span>:lyear, <span class="string">"lmonth"</span>:lmonth, <span class="string">"lday"</span>:lday, <span class="string">"is_leap_month"</span>:is_leap_month}
-    lunar_date_dict.update(get_lunar_chinese_date(lyear, lmonth, lday, is_leap_month))
+<span class="comment"># 根据计算处理的天数间隔和年份，求阳历月和日</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_solar_month_day</span><span class="params">(syear, solar_days_to_calculate)</span>:</span>
+    smonth = <span class="number">1</span>
+    <span class="keyword">while</span> solar_days_to_calculate - get_syear_total_month_days(syear, smonth) &gt; <span class="number">0</span>:
+        solar_days_to_calculate -= get_syear_total_month_days(syear, smonth)
+        smonth += <span class="number">1</span>
+    sday = solar_days_to_calculate
+    <span class="keyword">return</span> (smonth, sday) 
 
-    <span class="keyword">return</span> lunar_date_dict
-</code></pre><p>返回值中国农历格式年份，年份由天干地支组成，又一定的计算规律，而月份也有正月，冬月，腊月的叫法，算法设计如下：</p>
-<pre><code><span class="comment"># 表示中国农历年的天干</span>
-CN_LUNAR_TG = [<span class="string">"甲"</span>, <span class="string">"乙"</span>, <span class="string">"丙"</span>, <span class="string">"丁"</span>, <span class="string">"戊"</span>, <span class="string">"己"</span>, <span class="string">"庚"</span>, <span class="string">"辛"</span>, <span class="string">"壬"</span>, <span class="string">"癸"</span>]
-<span class="comment"># 表示中国农历年的地支</span>
-CN_LUNAR_DZ = [<span class="string">"子"</span>, <span class="string">"丑"</span>, <span class="string">"寅"</span>, <span class="string">"卯"</span>, <span class="string">"辰"</span>, <span class="string">"巳"</span>, <span class="string">"午"</span>, <span class="string">"未"</span>, <span class="string">"申"</span>, <span class="string">"酉"</span>, <span class="string">"戌"</span>, <span class="string">"亥"</span>]
-<span class="comment"># 表示中国农历年的生肖</span>
-CN_LUNAR_ANIMAR = [<span class="string">"鼠"</span>, <span class="string">"牛"</span>, <span class="string">"虎"</span>, <span class="string">"兔"</span>, <span class="string">"龙"</span>, <span class="string">"蛇"</span>, <span class="string">"马"</span>, <span class="string">"羊"</span>, <span class="string">"猴"</span>, <span class="string">"鸡"</span>, <span class="string">"猪"</span>]
-<span class="comment"># 表示中国农历年的大写月份</span>
-CN_LUNAR_MONTH = [<span class="string">""</span>, <span class="string">"正月"</span>, <span class="string">"二月"</span>, <span class="string">"三月"</span>, <span class="string">"四月"</span>, <span class="string">"五月"</span>, <span class="string">"六月"</span>, <span class="string">"七月"</span>, <span class="string">"八月"</span>, <span class="string">"九月"</span>, <span class="string">"十月"</span>, <span class="string">"冬月"</span>, <span class="string">"腊月"</span>]
-<span class="comment"># 表示中国农历年的大写日期</span>
-CN_LUNAR_DAY = [<span class="string">""</span>, 
-<span class="string">"初一"</span>, <span class="string">"初二"</span>, <span class="string">"初三"</span>, <span class="string">"初四"</span>, <span class="string">"初五"</span>, <span class="string">"初六"</span>, <span class="string">"初七"</span>, <span class="string">"初八"</span>, <span class="string">"初九"</span>, <span class="string">"初十"</span>, 
- <span class="string">"十一"</span>, <span class="string">"十二"</span>, <span class="string">"十三"</span>, <span class="string">"十四"</span>, <span class="string">"十五"</span>, <span class="string">"十六"</span>, <span class="string">"十七"</span>, <span class="string">"十八"</span>, <span class="string">"十九"</span>, <span class="string">"二十"</span>, 
- <span class="string">"廿一"</span>, <span class="string">"廿二"</span>, <span class="string">"廿三"</span>, <span class="string">"廿四"</span>, <span class="string">"廿五"</span>, <span class="string">"廿六"</span>, <span class="string">"廿七"</span>, <span class="string">"廿八"</span>, <span class="string">"廿九"</span>, <span class="string">"三十"</span>
-]
+<span class="comment"># 根据给定农历年月日及是否闰月求阳历年月日</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_solar_date</span><span class="params">(lyear, lmonth, lday, is_leap_month=False)</span>:</span>
+    is_leap_month &amp;= is_leap_lmonth(lyear, lmonth)　　＃ 判断是否闰月
+    lunar_days = get_lunar_days_to_lday(lyear, lmonth, lday, is_leap_month)    <span class="comment"># 正月初一至当前农历日期天数间隔    </span>
 
-＃ 返回中文格式农历年月日
-<span class="function"><span class="keyword">def</span> <span class="title">get_lunar_chinese_date</span><span class="params">(lyear, lmonth, lday, is_leap_month)</span>:</span>
-    cn_lyear = CN_LUNAR_TG[(lyear - <span class="number">4</span>) % <span class="number">10</span>] + CN_LUNAR_DZ[(lyear - <span class="number">4</span>) % <span class="number">12</span>]
-    cn_animal_lyear = CN_LUNAR_ANIMAR[(lyear - <span class="number">4</span>) % <span class="number">12</span>]
-    cn_lmonth = CN_LUNAR_MONTH[lmonth]
-    cn_lday = CN_LUNAR_DAY[lday]
+    <span class="comment">#获取当前农历年份正月初一所在阳历日期</span>
+    spring_month = (LUNAR_CALENDAR_TABLE[lyear - <span class="number">1901</span>] &amp; <span class="number">0x60</span>) &gt;&gt; <span class="number">5</span>           
+    spring_day = spring_day = LUNAR_CALENDAR_TABLE[lyear - <span class="number">1901</span>] &amp; <span class="number">0x1F</span>    
+    solar_days_to_spring_day = get_days_of_syear(lyear, spring_month, spring_day)  ＃ 从阳历１月１日至正月初一阳历日期的时间间隔
 
-    <span class="keyword">return</span> {<span class="string">"cn_lyear"</span>:cn_lyear, <span class="string">"cn_animal_lyear"</span>:cn_animal_lyear, <span class="string">"cn_lmonth"</span>:cn_lmonth, <span class="string">"cn_lday"</span>:cn_lday}
-</code></pre><hr>
-<p><em>参考文章: <a href="http://justcoding.iteye.com/blog/901758/" target="_blank" rel="external">Python实例讲解 — 获取本地时间日期(日期计算)</a></em></p>
+    solar_days_to_calculate = solar_days_to_lday = solar_days_to_spring_day + lunar_days - <span class="number">1</span>
+    total_solar_year_days = get_syear_total_days(lyear)          <span class="comment"># 365 or 366</span>
 
+    syear = lyear    <span class="comment"># 阳历日期</span>
+    <span class="comment">#如果阳历年已翻年</span>
+    <span class="keyword">if</span> solar_days_to_lday &gt; total_solar_year_days:
+        solar_days_to_calculate = solar_days_to_lday - total_solar_year_days
+        syear += <span class="number">1</span>    <span class="comment"># 阳历年+1</span>
+
+    smonth, sday = get_solar_month_day(syear, solar_days_to_calculate)
+
+    <span class="keyword">return</span> {<span class="string">'year'</span>:syear, <span class="string">'month'</span>:smonth, <span class="string">'day'</span>:sday}    
+</code></pre>
         </section>
         <hr/>
         <nav class="pagination" style="width:auto" role="pagination">
             
-            <a data-pjax class="newer-posts" href="/2015/01/25/lunar_to_solar/">← Prev Post</a>
+            <a style="cursor:default" class="newer-posts" href="#">This is the First Post</a>
             
             <a class="share-button" data-original-title title>Share this Post</a>
             
-            <a data-pjax class="older-posts" href="/2014/12/17/design-patterns/">Next Post →</a>
+            <a data-pjax class="older-posts" href="/2015/01/25/solar_to_lunar/">Next Post →</a>
             
         </nav>
         <br/>
