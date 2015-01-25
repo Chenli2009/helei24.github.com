@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>阴阳历算法实现(1) -- 阳历转阴历 | Stone&#39;s Blog</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="/css/component.css" />
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <meta name="generator" content="Stone's Blog">
+  <script src="http://static.duoshuo.com/embed.js"></script>
+  
+  
+  
+
+  
+
+</head>
+<body>
+<div class="container">
+    <div class="mp-pusher" id="mp-pusher">
+        <i id="scroll-up" class="fa fa-angle-up"></i>
+        <nav id="mp-menu" class="mp-menu">
+            <div class="mp-level">
+                <a data-pjax class="back-home" style="font-size: 20px" href="/"><h2 ><i class="fa fa-home"></i>
+                        Home</h2></a>
+                <ul class="first-level">
+                    <li>
+                        <a class="fa fa-archive" href="#"><i class="fa fa-angle-left">
+                            </i>&nbsp;&nbsp;Archive</a>
+                        <div class="mp-level page-list">
+                            <h2 ><i class="fa fa-archive"></i>
+                                Archive</h2>
+                            <a class="mp-back" href="#">back</a>
+                            <form id="search-form" action="">
+                                <input type="text" class="search search-archive" placeholder="Search.."/>
+                            </form>
+                            <ul>
+                                <div class="mp-scroll">
+                                
+                                <li class="search-archive-li mp-pjax">
+                                    <a href="/2015/01/25/solar_to_lunar/">阴阳历算法实现(1) -- 阳历转阴历</a>
+                                </li>
+                                
+                                <li class="search-archive-li mp-pjax">
+                                    <a href="/2014/12/17/design-patterns/">设计模式</a>
+                                </li>
+                                
+                                <li class="search-archive-li mp-pjax">
+                                    <a href="/2014/12/17/grep/">grep命令详解-9个经典使用场景</a>
+                                </li>
+                                
+                                <li class="search-archive-li mp-pjax">
+                                    <a href="/2014/12/17/welcome/">Welcome to Stone&#39;s Blog</a>
+                                </li>
+                                
+                                </div>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="fa fa-copy" href="#"><i class="fa fa-angle-left">
+                            </i>&nbsp;&nbsp;Categories</a>
+
+                        <div class="mp-level page-list">
+                            <h2 ><i class="fa fa-copy"></i>
+                                Categories</h2>
+                            <a class="mp-back" href="#">back</a>
+                            <form id="search-form" action="">
+                                <input type="text" class="search search-category" placeholder="Search.."/>
+                            </form>
+                            <ul>
+                                <div class="mp-scroll">
+                                
+                                <li class="search-category-li mp-pjax">
+                                    <a href="/categories/Python/">&nbsp;&nbsp;&nbsp;Python</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                <li class="search-category-li mp-pjax">
+                                    <a href="/categories/linux/">&nbsp;&nbsp;&nbsp;linux</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                <li class="search-category-li mp-pjax">
+                                    <a href="/categories/设计模式/">&nbsp;&nbsp;&nbsp;设计模式</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                </div>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="fa fa-tags" href="#"><i class="fa fa-angle-left">
+                            </i>&nbsp;&nbsp;Tags</a>
+                        <div class="mp-level page-list">
+                            <h2 ><i class="fa fa-tags"></i>
+                                Tags</h2>
+                            <a class="mp-back" href="#">back</a>
+                            <form id="search-form" action="">
+                                <input type="text" class="search search-tag" placeholder="Search.."/>
+                            </form>
+                            <ul>
+                                <div class="mp-scroll">
+                                
+                                <li class="search-tag-li mp-pjax">
+                                    <a href="/tags/shell/">&nbsp;&nbsp;&nbsp;shell</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                <li class="search-tag-li mp-pjax">
+                                    <a href="/tags/接口/">&nbsp;&nbsp;&nbsp;接口</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                <li class="search-tag-li mp-pjax">
+                                    <a href="/tags/正则表达式/">&nbsp;&nbsp;&nbsp;正则表达式</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                <li class="search-tag-li mp-pjax">
+                                    <a href="/tags/算法/">&nbsp;&nbsp;&nbsp;算法　</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                <li class="search-tag-li mp-pjax">
+                                    <a href="/tags/设计/">&nbsp;&nbsp;&nbsp;设计</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                <li class="search-tag-li mp-pjax">
+                                    <a href="/tags/阴阳历/">&nbsp;&nbsp;&nbsp;阴阳历　</a>
+                                    <small>1</small>
+                                </li>
+                                
+                                </div>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <li><a class="fa fa-user" href="/resume.html">&nbsp;&nbsp;&nbsp;About me</a></li>
+                    <li><a class="fa fa-github" href="https://github.com/helei24">&nbsp;&nbsp;&nbsp;Github</a></li>
+
+                </ul>
+
+            </div>
+        </nav>
+        <div id="pjax">
+            <div class="pjax-hidden" style="display: none">
+                
+                    <a  data-pjax href="/2015/01/25/solar_to_lunar/">阴阳历算法实现(1) -- 阳历转阴历</a>
+                
+                    <a  data-pjax href="/2014/12/17/design-patterns/">设计模式</a>
+                
+                    <a  data-pjax href="/2014/12/17/grep/">grep命令详解-9个经典使用场景</a>
+                
+                    <a  data-pjax href="/2014/12/17/welcome/">Welcome to Stone&#39;s Blog</a>
+                
+                
+                    <a data-pjax href="/categories/Python/">&nbsp;&nbsp;Python</a>
+                
+                    <a data-pjax href="/categories/linux/">&nbsp;&nbsp;linux</a>
+                
+                    <a data-pjax href="/categories/设计模式/">&nbsp;&nbsp;设计模式</a>
+                
+                
+                    <a data-pjax href="/tags/shell/">&nbsp;&nbsp;shell</a>
+                
+                    <a data-pjax href="/tags/接口/">&nbsp;&nbsp;接口</a>
+                
+                    <a data-pjax href="/tags/正则表达式/">&nbsp;&nbsp;正则表达式</a>
+                
+                    <a data-pjax href="/tags/算法/">&nbsp;&nbsp;算法　</a>
+                
+                    <a data-pjax href="/tags/设计/">&nbsp;&nbsp;设计</a>
+                
+                    <a data-pjax href="/tags/阴阳历/">&nbsp;&nbsp;阴阳历　</a>
+                
+                <a data-pjax class="fa fa-user" href="/about">&nbsp;&nbsp;&nbsp;About me</a>
+            </div>
+            <nav class="nexus">
+                <li  style="border-left: 1px solid #c6d0da;">
+                    <a id="trigger" href="#"><i class="fa fa-bars"></i></a>
+                </li>
+                <li ><a id="nexus-back" data-pjax href="/">Stone&#39;s Blog</a></li>
+                
+                <div id="nav-container">
+                    <div class="post-navbar" style="line-height: 63px;display:none">
+                        <li id="navbar-title"><a href="#">阴阳历算法实现(1) -- 阳历转阴历</a></li>
+                        <li id="navbar-toc" style="border-left: none">
+                            <a style="padding-right: 15px">
+                                <span id="toc-content" >Introduction</span><i class="fa fa-chevron-down" ></i>
+                            </a>
+                            <div class="hidden-box">
+                                <ul id="toc"></ul>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+                
+            </nav>
+
+            <div class="scroller">
+            <div class="scroller-inner">
+
+
+<!-- -->
+<!--<body class="post-template">-->
+<!---->
+  
+
+<main class="content" role="main">
+    <article class="post" >
+    <span class="post-meta">
+                  <div class="tag-tile">
+                      
+                      
+                      <a data-pjax href='/tags/算法/' style='color:#D5D5D5'>算法　</a>
+                      
+                      <a data-pjax href='/tags/阴阳历/' style='color:#D5D5D5'>阴阳历　</a>
+                      
+                      <a data-pjax href='/tags/接口/' style='color:#D5D5D5'>接口</a>
+                      
+                      
+                  </div>
+                <h1 class="post-title" style="margin: 14px 0;color:#50585D">阴阳历算法实现(1) -- 阳历转阴历</h1>
+
+                    <div class="post-meta">
+                        Post on<span class="fa fa-clock-o"></span>
+                        <time datetime="2015-01-25T10:42:16.000Z"
+                              itemprop="datePublished">Jan 25 2015</time>
+                    </div>
+    </span>
+
+        <section class="post-content">
+            <h2 id="阳历转阴历">阳历转阴历</h2>
+<h4 id="实现背景"><strong>实现背景</strong></h4>
+<p> 本人一年前实习时候参与过一个API项目,其中就包括实现阴阳历互换API接口,调研过一番其实现算法.时间久了算法详细过程大概忘记了,最近突然就想重新实现一次,于是又开始了.<br> 跟什么进制转换,计算器等等算法相比,阳历(即公历,就是生活中走得较快的那个全世界都在使用的日期)与阴历(即农历,旧历,就是生活中走得较慢的只有咱们中国在用的那个日期)之间的相互转换就没有一套固定的转换规律了.   对于阳历而言,其相对还算简单,大小月以及平闰年分布有规律,很方便计算,但是对于农历就相对复杂了,农历也有大小月之分,但是无平闰年之分,尤其特殊的是闰月出现的不规律,这就为算法增添了难度.但是,还是有办法实现的的!!</p>
+<h4 id="算法设计"><strong>算法设计</strong></h4>
+<p>由于阴阳历日期之间间隔时间的不规律性,每一年阴阳历日期之间的相差的天数都不一样,不能简单的对给定日期进行加减运算.所以,要求出给定阳历日期与所求阴历日期相差的天数,需要<br>第一,需要确定所求阴历年份是与阳历年份相同还是少一年;<br>第二,找到一个中间日期作为阴阳历转换的基准,显然,春节大年初一最为适合,确定当年大年初一的阳历时间;<br>第三,确定所求年农历日期距离春节(大年初一)的具体天数;<br>第四,计算阴历月日.<br>    显然,四步当中,第二步最为艰难,怎样确定大年初一的阳历时间呢?没有能确定的规则,只能将每年正月初一的阳历日期预先存储起来<br>接下来,就为了确定农历日期,便需要获取当年农历每月大小月分布情况,闰月等等,我们仍旧预先存储.从空间和常用角度考虑,我们只需用十六进制存储,而且存储1901-2099之间两百年就够了.农历日期结构设计如下:</p>
+<pre><code>LUNAR_CALENDAR_TABLE = [  
+<span class="number">0x04AE53</span>,<span class="number">0x0A5748</span>,<span class="number">0x5526BD</span>,<span class="number">0x0D2650</span>,<span class="number">0x0D9544</span>,<span class="number">0x46AAB9</span>,<span class="number">0x056A4D</span>,<span class="number">0x09AD42</span>,<span class="number">0x24AEB6</span>,<span class="number">0x04AE4A</span>, # //*<span class="number">1901</span>-<span class="number">1910</span>*/  
+<span class="number">0x6A4DBE</span>,<span class="number">0x0A4D52</span>,<span class="number">0x0D2546</span>,<span class="number">0x5D52BA</span>,<span class="number">0x0B544E</span>,<span class="number">0x0D6A43</span>,<span class="number">0x296D37</span>,<span class="number">0x095B4B</span>,<span class="number">0x749BC1</span>,<span class="number">0x049754</span>, # //*<span class="number">1911</span>-<span class="number">1920</span>*/  
+<span class="number">0x0A4B48</span>,<span class="number">0x5B25BC</span>,<span class="number">0x06A550</span>,<span class="number">0x06D445</span>,<span class="number">0x4ADAB8</span>,<span class="number">0x02B64D</span>,<span class="number">0x095742</span>,<span class="number">0x2497B7</span>,<span class="number">0x04974A</span>,<span class="number">0x664B3E</span>, # //*<span class="number">1921</span>-<span class="number">1930</span>*/  
+<span class="number">0x0D4A51</span>,<span class="number">0x0EA546</span>,<span class="number">0x56D4BA</span>,<span class="number">0x05AD4E</span>,<span class="number">0x02B644</span>,<span class="number">0x393738</span>,<span class="number">0x092E4B</span>,<span class="number">0x7C96BF</span>,<span class="number">0x0C9553</span>,<span class="number">0x0D4A48</span>, # //*<span class="number">1931</span>-<span class="number">1940</span>*/     
+<span class="number">0x6DA53B</span>,<span class="number">0x0B554F</span>,<span class="number">0x056A45</span>,<span class="number">0x4AADB9</span>,<span class="number">0x025D4D</span>,<span class="number">0x092D42</span>,<span class="number">0x2C95B6</span>,<span class="number">0x0A954A</span>,<span class="number">0x7B4ABD</span>,<span class="number">0x06CA51</span>, # //*<span class="number">1941</span>-<span class="number">1950</span>*/  
+<span class="number">0x0B5546</span>,<span class="number">0x555ABB</span>,<span class="number">0x04DA4E</span>,<span class="number">0x0A5B43</span>,<span class="number">0x352BB8</span>,<span class="number">0x052B4C</span>,<span class="number">0x8A953F</span>,<span class="number">0x0E9552</span>,<span class="number">0x06AA48</span>,<span class="number">0x6AD53C</span>, # //*<span class="number">1951</span>-<span class="number">1960</span>*/  
+ <span class="number">0x0AB54F</span>,<span class="number">0x04B645</span>,<span class="number">0x4A5739</span>,<span class="number">0x0A574D</span>,<span class="number">0x052642</span>,<span class="number">0x3E9335</span>,<span class="number">0x0D9549</span>,<span class="number">0x75AABE</span>,<span class="number">0x056A51</span>,<span class="number">0x096D46</span>, # //*<span class="number">1961</span>-<span class="number">1970</span>*/  
+<span class="number">0x54AEBB</span>,<span class="number">0x04AD4F</span>,<span class="number">0x0A4D43</span>,<span class="number">0x4D26B7</span>,<span class="number">0x0D254B</span>,<span class="number">0x8D52BF</span>,<span class="number">0x0B5452</span>,<span class="number">0x0B6A47</span>,<span class="number">0x696D3C</span>,<span class="number">0x095B50</span>, # //*<span class="number">1971</span>-<span class="number">1980</span>*/  
+<span class="number">0x049B45</span>,<span class="number">0x4A4BB9</span>,<span class="number">0x0A4B4D</span>,<span class="number">0xAB25C2</span>,<span class="number">0x06A554</span>,<span class="number">0x06D449</span>,<span class="number">0x6ADA3D</span>,<span class="number">0x0AB651</span>,<span class="number">0x093746</span>,<span class="number">0x5497BB</span>, # //*<span class="number">1981</span>-<span class="number">1990</span>*/  
+<span class="number">0x04974F</span>,<span class="number">0x064B44</span>,<span class="number">0x36A537</span>,<span class="number">0x0EA54A</span>,<span class="number">0x86B2BF</span>,<span class="number">0x05AC53</span>,<span class="number">0x0AB647</span>,<span class="number">0x5936BC</span>,<span class="number">0x092E50</span>,<span class="number">0x0C9645</span>, # //*<span class="number">1991</span>-<span class="number">2000</span>*/  
+<span class="number">0x4D4AB8</span>,<span class="number">0x0D4A4C</span>,<span class="number">0x0DA541</span>,<span class="number">0x25AAB6</span>,<span class="number">0x056A49</span>,<span class="number">0x7AADBD</span>,<span class="number">0x025D52</span>,<span class="number">0x092D47</span>,<span class="number">0x5C95BA</span>,<span class="number">0x0A954E</span>, # //*<span class="number">2001</span>-<span class="number">2010</span>*/  
+<span class="number">0x0B4A43</span>,<span class="number">0x4B5537</span>,<span class="number">0x0AD54A</span>,<span class="number">0x955ABF</span>,<span class="number">0x04BA53</span>,<span class="number">0x0A5B48</span>,<span class="number">0x652BBC</span>,<span class="number">0x052B50</span>,<span class="number">0x0A9345</span>,<span class="number">0x474AB9</span>, # //*<span class="number">2011</span>-<span class="number">2020</span>*/  
+<span class="number">0x06AA4C</span>,<span class="number">0x0AD541</span>,<span class="number">0x24DAB6</span>,<span class="number">0x04B64A</span>,<span class="number">0x69573D</span>,<span class="number">0x0A4E51</span>,<span class="number">0x0D2646</span>,<span class="number">0x5E933A</span>,<span class="number">0x0D534D</span>,<span class="number">0x05AA43</span>, # //*<span class="number">2021</span>-<span class="number">2030</span>*/  
+<span class="number">0x36B537</span>,<span class="number">0x096D4B</span>,<span class="number">0xB4AEBF</span>,<span class="number">0x04AD53</span>,<span class="number">0x0A4D48</span>,<span class="number">0x6D25BC</span>,<span class="number">0x0D254F</span>,<span class="number">0x0D5244</span>,<span class="number">0x5DAA38</span>,<span class="number">0x0B5A4C</span>, # //*<span class="number">2031</span>-<span class="number">2040</span>*/  
+<span class="number">0x056D41</span>,<span class="number">0x24ADB6</span>,<span class="number">0x049B4A</span>,<span class="number">0x7A4BBE</span>,<span class="number">0x0A4B51</span>,<span class="number">0x0AA546</span>,<span class="number">0x5B52BA</span>,<span class="number">0x06D24E</span>,<span class="number">0x0ADA42</span>,<span class="number">0x355B37</span>, # //*<span class="number">2041</span>-<span class="number">2050</span>*/  
+<span class="number">0x09374B</span>,<span class="number">0x8497C1</span>,<span class="number">0x049753</span>,<span class="number">0x064B48</span>,<span class="number">0x66A53C</span>,<span class="number">0x0EA54F</span>,<span class="number">0x06B244</span>,<span class="number">0x4AB638</span>,<span class="number">0x0AAE4C</span>,<span class="number">0x092E42</span>, # //*<span class="number">2051</span>-<span class="number">2060</span>*/  
+<span class="number">0x3C9735</span>,<span class="number">0x0C9649</span>,<span class="number">0x7D4ABD</span>,<span class="number">0x0D4A51</span>,<span class="number">0x0DA545</span>,<span class="number">0x55AABA</span>,<span class="number">0x056A4E</span>,<span class="number">0x0A6D43</span>,<span class="number">0x452EB7</span>,<span class="number">0x052D4B</span>, # //*<span class="number">2061</span>-<span class="number">2070</span>*/  
+<span class="number">0x8A95BF</span>,<span class="number">0x0A9553</span>,<span class="number">0x0B4A47</span>,<span class="number">0x6B553B</span>,<span class="number">0x0AD54F</span>,<span class="number">0x055A45</span>,<span class="number">0x4A5D38</span>,<span class="number">0x0A5B4C</span>,<span class="number">0x052B42</span>,<span class="number">0x3A93B6</span>, # //*<span class="number">2071</span>-<span class="number">2080</span>*/  
+<span class="number">0x069349</span>,<span class="number">0x7729BD</span>,<span class="number">0x06AA51</span>,<span class="number">0x0AD546</span>,<span class="number">0x54DABA</span>,<span class="number">0x04B64E</span>,<span class="number">0x0A5743</span>,<span class="number">0x452738</span>,<span class="number">0x0D264A</span>,<span class="number">0x8E933E</span>, # //*<span class="number">2081</span>-<span class="number">2090</span>*/  
+<span class="number">0x0D5252</span>,<span class="number">0x0DAA47</span>,<span class="number">0x66B53B</span>,<span class="number">0x056D4F</span>,<span class="number">0x04AE45</span>,<span class="number">0x4A4EB9</span>,<span class="number">0x0A4D4C</span>,<span class="number">0x0D1541</span>,<span class="number">0x2D92B5</span>           # //*<span class="number">2091</span>-<span class="number">2099</span>*/  
+ ]
+# 下面的三个表格是农历数据表 LunarCalendarTable 的结构。总共使用了<span class="number">32</span>位整数的<span class="number">0</span>～<span class="number">23</span>位。
+#  
+# <span class="number">6</span> <span class="number">5</span>                <span class="number">4</span> <span class="number">3</span> <span class="number">2</span> <span class="number">1</span> <span class="number">0</span>   
+# 表示春节的公历月份 表示春节的公历日期 
+#  
+# <span class="number">19</span> <span class="number">18</span> <span class="number">17</span> <span class="number">16</span> <span class="number">15</span> <span class="number">14</span> <span class="number">13</span> <span class="number">12</span> <span class="number">11</span> <span class="number">10</span>  <span class="number">9</span>  <span class="number">8</span>  <span class="number">7</span>   
+# <span class="number">1</span>   <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span> <span class="number">10</span> <span class="number">11</span> <span class="number">12</span> <span class="number">13</span>  
+# 农历<span class="number">1</span>-<span class="number">13</span> 月大小 。月份对应位为<span class="number">1</span>，农历月大(<span class="number">30</span> 天),为<span class="number">0</span> 表示小(<span class="number">29</span> 天)  
+#
+# <span class="number">23</span> <span class="number">22</span> <span class="number">21</span> <span class="number">20</span>   
+# 表示当年闰月月份，值为<span class="number">0</span> 为则表示当年无闰月。
+
+# 存储阳历月份天数
+MONTH_DAYS = [<span class="number">0</span>,<span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>]<span class="comment">;</span>
+</code></pre><h4 id="算法实现"><strong>算法实现</strong></h4>
+<pre><code><span class="comment"># 返回阳历年份的总天数</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_syear_total_days</span><span class="params">(syear)</span>:</span>
+    <span class="keyword">if</span> (syear % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> syear % <span class="number">100</span> != <span class="number">0</span>) <span class="keyword">or</span> (syear % <span class="number">400</span> == <span class="number">0</span>):
+        <span class="keyword">return</span> <span class="number">366</span>  <span class="comment">#闰年</span>
+    <span class="keyword">else</span>:
+        <span class="keyword">return</span> <span class="number">365</span>  <span class="comment">#平年</span>
+
+<span class="comment"># 返回阳历年所给月份的总天数</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_syear_total_month_days</span><span class="params">(syear, smonth)</span>:</span>
+    days = MONTH_DAYS[smonth]    <span class="comment"># 每月总天数</span>
+    <span class="keyword">if</span> (syear % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> syear % <span class="number">100</span> != <span class="number">0</span>) <span class="keyword">or</span> (syear % <span class="number">400</span> == <span class="number">0</span>):
+        <span class="keyword">if</span> smonth == <span class="number">2</span>:          <span class="comment"># 闰年2月总天数为29天,平年为28天</span>
+            days += <span class="number">1</span>
+    <span class="keyword">return</span> days    
+
+<span class="comment"># 返回给定年1月1日到给定日期的总天数</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_days_of_syear</span><span class="params">(syear, smonth, sday)</span>:</span>
+    days = sday
+    <span class="keyword">for</span> m <span class="keyword">in</span> range(<span class="number">1</span>, smonth):
+        days += get_syear_total_month_days(syear, m)    
+    <span class="keyword">return</span> days
+
+<span class="comment"># 返回所求阴历年份, 返回正月初一到所给阳历日期(对应的阴历日期)的总阴历天数</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_lunar_days_to_sday</span><span class="params">(syear, smonth, sday)</span>:</span>
+    lunar_days = <span class="number">0</span>    <span class="comment"># 总阴历天数</span>
+    lyear = syear     <span class="comment"># 阴历年份</span>
+    <span class="comment">#假设当前阳历年份和阴历年份在同一年,然后求出当前年正月初一所在日期</span>
+    spring_month = (LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span>] &amp; <span class="number">0x60</span>) &gt;&gt; <span class="number">5</span>    <span class="comment">#春节(正月)所在阳历月份</span>
+    spring_day = LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span>] &amp; <span class="number">0x1F</span>    <span class="comment">#春节(正月初一)所在阳历日期              </span>
+    <span class="comment"># 如果春节所在阳历日期在给定阳历日期之前,意味着阳历日期已翻年,阴历年份减一</span>
+    <span class="keyword">if</span> spring_month &gt; smonth <span class="keyword">or</span> (spring_month == smonth <span class="keyword">and</span> spring_day &gt;= sday):
+        lyear -= <span class="number">1</span>    <span class="comment">#阴历年份减一</span>
+        <span class="comment">#阳历年份和阴历年份不在同一年,阳历已翻年,所以需要重新获取正确(阴历)年份正月初一日期</span>
+        spring_month = (LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span> -<span class="number">1</span>] &amp; <span class="number">0x60</span>) &gt;&gt; <span class="number">5</span>    <span class="comment">#正确阴历年春节(正月)所在阳历月份</span>
+        spring_day = spring_day = LUNAR_CALENDAR_TABLE[syear - <span class="number">1901</span> -<span class="number">1</span>] &amp; <span class="number">0x1F</span>    <span class="comment">#正确阴历年春节(正月)初一所在阳历日期</span>
+        <span class="comment"># 给定日期在给定年份的总天数 + 上年(翻年前)全年总天数 - 上年(翻年前)正月初一总天数</span>
+        lunar_days = get_days_of_syear(syear, smonth, sday) + get_syear_total_days(lyear) - get_days_of_syear(lyear, spring_month, spring_day)    <span class="comment">#  </span>
+    <span class="comment"># 当前阳历年份和阴历年份在同一年,即未翻年</span>
+    <span class="keyword">else</span>:
+        <span class="comment"># 给定日期在给定年份的总天数 - 给定年份正月初一总天数</span>
+        lunar_days = get_days_of_syear(lyear, smonth, sday) - get_days_of_syear(lyear, spring_month, spring_day)
+
+    <span class="keyword">return</span> (lyear, lunar_days)    <span class="comment"># 返回年份,日期总天数</span>
+
+
+<span class="comment"># 根据给定阳历年,月,日返回阴历日期</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_lunar_date</span><span class="params">(syear, smonth, sday)</span>:</span>
+    <span class="keyword">if</span> syear &lt; <span class="number">1901</span> <span class="keyword">or</span> syear &gt; <span class="number">2099</span>:    <span class="comment"># 如果给定年不在1901-2099之间, 罢工</span>
+        <span class="keyword">return</span>   
+
+    lyear, lunar_days = get_lunar_days_to_sday(syear, smonth, sday)    <span class="comment"># 所求阴历年, 阴历总天数</span>
+    leap_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; <span class="number">20</span>) &amp; <span class="number">0xF</span>  <span class="comment"># 闰月月份,返回0表示无闰月</span>
+
+    lmonth = lday = <span class="number">1</span>    <span class="comment"># 初始化农历月，日</span>
+    start_day_of_month = <span class="number">1</span>    <span class="comment"># 用以累加, 获取农历月份和日期</span>
+    bits = <span class="number">19</span>    <span class="comment"># 遍历获取大小月索引, 大月:1, 小月:0</span>
+    ＃ 循环所求年农历月份
+    <span class="keyword">for</span> lmonth <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">14</span>):
+        l_big_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; bits) &amp; <span class="number">0x1</span>    <span class="comment"># 当前月大小</span>
+
+        <span class="keyword">if</span> start_day_of_month + <span class="number">29</span> + l_big_month &lt; lunar_days:
+            lmonth += <span class="number">1</span>    <span class="comment"># 月份+1</span>
+            start_day_of_month += <span class="number">29</span> + l_big_month    ＃ start_day_of_month＋当前农历月份总天数
+        <span class="keyword">else</span>:
+            lday = lunar_days - start_day_of_month    <span class="comment"># 得到所求日期</span>
+            <span class="keyword">break</span>    <span class="comment"># 结束循环 </span>
+        bits -= <span class="number">1</span>    ＃ 跳至下个月　　　　
+
+    <span class="comment"># 考虑闰月</span>
+    <span class="keyword">if</span> leap_month <span class="keyword">and</span> leap_month &lt;= lmonth - <span class="number">1</span>:
+        lmonth -= <span class="number">1</span> <span class="comment">#　如果闰月，由于lmonth+=1，所以需要-=１</span>
+    is_leap_month = <span class="keyword">True</span> <span class="keyword">if</span> lmonth == leap_month <span class="keyword">else</span> <span class="keyword">False</span>    ＃闰月：返回<span class="keyword">True</span>, 非闰月：返回<span class="keyword">False</span>    
+
+    lunar_date_dict = {<span class="string">"lyear"</span>:lyear, <span class="string">"lmonth"</span>:lmonth, <span class="string">"lday"</span>:lday, <span class="string">"is_leap_month"</span>:is_leap_month}
+    lunar_date_dict.update(get_lunar_chinese_date(lyear, lmonth, lday, is_leap_month))
+
+    <span class="keyword">return</span> lunar_date_dict
+</code></pre><p>返回值中国农历格式年份，年份由天干地支组成，又一定的计算规律，而月份也有正月，冬月，腊月的叫法，算法设计如下：</p>
+<pre><code><span class="comment"># 表示中国农历年的天干</span>
+CN_LUNAR_TG = [<span class="string">"甲"</span>, <span class="string">"乙"</span>, <span class="string">"丙"</span>, <span class="string">"丁"</span>, <span class="string">"戊"</span>, <span class="string">"己"</span>, <span class="string">"庚"</span>, <span class="string">"辛"</span>, <span class="string">"壬"</span>, <span class="string">"癸"</span>]
+<span class="comment"># 表示中国农历年的地支</span>
+CN_LUNAR_DZ = [<span class="string">"子"</span>, <span class="string">"丑"</span>, <span class="string">"寅"</span>, <span class="string">"卯"</span>, <span class="string">"辰"</span>, <span class="string">"巳"</span>, <span class="string">"午"</span>, <span class="string">"未"</span>, <span class="string">"申"</span>, <span class="string">"酉"</span>, <span class="string">"戌"</span>, <span class="string">"亥"</span>]
+<span class="comment"># 表示中国农历年的生肖</span>
+CN_LUNAR_ANIMAR = [<span class="string">"鼠"</span>, <span class="string">"牛"</span>, <span class="string">"虎"</span>, <span class="string">"兔"</span>, <span class="string">"龙"</span>, <span class="string">"蛇"</span>, <span class="string">"马"</span>, <span class="string">"羊"</span>, <span class="string">"猴"</span>, <span class="string">"鸡"</span>, <span class="string">"猪"</span>]
+<span class="comment"># 表示中国农历年的大写月份</span>
+CN_LUNAR_MONTH = [<span class="string">""</span>, <span class="string">"正月"</span>, <span class="string">"二月"</span>, <span class="string">"三月"</span>, <span class="string">"四月"</span>, <span class="string">"五月"</span>, <span class="string">"六月"</span>, <span class="string">"七月"</span>, <span class="string">"八月"</span>, <span class="string">"九月"</span>, <span class="string">"十月"</span>, <span class="string">"冬月"</span>, <span class="string">"腊月"</span>]
+<span class="comment"># 表示中国农历年的大写日期</span>
+CN_LUNAR_DAY = [<span class="string">""</span>, 
+<span class="string">"初一"</span>, <span class="string">"初二"</span>, <span class="string">"初三"</span>, <span class="string">"初四"</span>, <span class="string">"初五"</span>, <span class="string">"初六"</span>, <span class="string">"初七"</span>, <span class="string">"初八"</span>, <span class="string">"初九"</span>, <span class="string">"初十"</span>, 
+ <span class="string">"十一"</span>, <span class="string">"十二"</span>, <span class="string">"十三"</span>, <span class="string">"十四"</span>, <span class="string">"十五"</span>, <span class="string">"十六"</span>, <span class="string">"十七"</span>, <span class="string">"十八"</span>, <span class="string">"十九"</span>, <span class="string">"二十"</span>, 
+ <span class="string">"廿一"</span>, <span class="string">"廿二"</span>, <span class="string">"廿三"</span>, <span class="string">"廿四"</span>, <span class="string">"廿五"</span>, <span class="string">"廿六"</span>, <span class="string">"廿七"</span>, <span class="string">"廿八"</span>, <span class="string">"廿九"</span>, <span class="string">"三十"</span>
+]
+
+＃ 返回中文格式农历年月日
+<span class="function"><span class="keyword">def</span> <span class="title">get_lunar_chinese_date</span><span class="params">(lyear, lmonth, lday, is_leap_month)</span>:</span>
+    cn_lyear = CN_LUNAR_TG[(lyear - <span class="number">4</span>) % <span class="number">10</span>] + CN_LUNAR_DZ[(lyear - <span class="number">4</span>) % <span class="number">12</span>]
+    cn_animal_lyear = CN_LUNAR_ANIMAR[(lyear - <span class="number">4</span>) % <span class="number">12</span>]
+    cn_lmonth = CN_LUNAR_MONTH[lmonth]
+    cn_lday = CN_LUNAR_DAY[lday]
+
+    <span class="keyword">return</span> {<span class="string">"cn_lyear"</span>:cn_lyear, <span class="string">"cn_animal_lyear"</span>:cn_animal_lyear, <span class="string">"cn_lmonth"</span>:cn_lmonth, <span class="string">"cn_lday"</span>:cn_lday}
+</code></pre><hr>
+<p><em>参考文章: <a href="http://justcoding.iteye.com/blog/901758/" target="_blank" rel="external">Python实例讲解 — 获取本地时间日期(日期计算)</a></em></p>
+
+        </section>
+        <hr/>
+        <nav class="pagination" style="width:auto" role="pagination">
+            
+            <a style="cursor:default" class="newer-posts" href="#">This is the First Post</a>
+            
+            <a class="share-button" data-original-title title>Share this Post</a>
+            
+            <a data-pjax class="older-posts" href="/2014/12/17/design-patterns/">Next Post →</a>
+            
+        </nav>
+        <br/>
+        <br/>
+        <section id="comment">
+            <div id="comment-box"></div>
+        </section>
+
+
+    </article>
+</main>
+
+
+  
+<footer class="site-footer">
+    
+    <div class="inner">
+        <section class="copyright"><a href="/"></a> &copy; Stone's Blog 2014</section>
+        <section class="poweredby">Published with <a target="_blank" href="http://hexo.io/">Hexo   </a> and Theme by <a target="_blank" href="https://github.com/yuche/hexo-theme-kael">Kael</a></section>
+    </div>
+</footer>
+</div>
+</div><!-- /scroller -->
+
+</div><!-- /pusher -->
+</div><!-- /container -->
+</div>
+
+<!-- Easter eggs -->
+
+<div class="egg animated">
+    <a id="close-button" href="#">X</a>
+    <div class="block">
+        <div class="loading">
+            <span class="ball1"></span>
+            <span class="ball2"></span>
+        </div>
+    </div>
+</div>
+  
+<script src="//cdn.staticfile.org/jquery/1.11.0/jquery.min.js"></script>
+<script>
+    if (!window.jQuery) {
+        var script = document.createElement('script');
+        script.src = "/js/jquery.min.js";
+        document.body.appendChild(script);
+    }
+</script>
+<script type="text/javascript" src="/js/lib.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>
