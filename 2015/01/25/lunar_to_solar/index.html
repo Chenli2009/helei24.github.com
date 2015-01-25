@@ -302,7 +302,7 @@ MONTH_DAYS = [<span class="number">0</span>,<span class="number">31</span>,<span
 
 <span class="comment"># 判断是否为闰月，是，返回True，否，返回False</span>
 <span class="function"><span class="keyword">def</span> <span class="title">is_leap_lmonth</span><span class="params">(lyear, lmonth)</span>:</span>
-    leap_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; <span class="number">20</span>) &amp; <span class="number">0xF</span>  <span class="comment">#leap month of that year, 0 means no leap month</span>
+    leap_month = (LUNAR_CALENDAR_TABLE[lyear-<span class="number">1901</span>] &gt;&gt; <span class="number">20</span>) &amp; <span class="number">0xF</span>  <span class="comment"># 为0表示无闰月</span>
     <span class="keyword">if</span> leap_month != <span class="number">0</span> <span class="keyword">and</span> lmonth == leap_month:
         <span class="keyword">return</span> <span class="keyword">True</span>
     <span class="keyword">else</span>:
@@ -362,7 +362,7 @@ MONTH_DAYS = [<span class="number">0</span>,<span class="number">31</span>,<span
     solar_days_to_spring_day = get_days_of_syear(lyear, spring_month, spring_day)  ＃ 从阳历１月１日至正月初一阳历日期的时间间隔
 
     solar_days_to_calculate = solar_days_to_lday = solar_days_to_spring_day + lunar_days - <span class="number">1</span>
-    total_solar_year_days = get_syear_total_days(lyear)          <span class="comment"># 365 or 366</span>
+    total_solar_year_days = get_syear_total_days(lyear)    <span class="comment"># 365 or 366</span>
 
     syear = lyear    <span class="comment"># 阳历日期</span>
     <span class="comment">#如果阳历年已翻年</span>
