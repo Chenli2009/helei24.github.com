@@ -246,7 +246,7 @@
         <section class="post-content">
             <h2 id="阴(农)历转阳历">阴(农)历转阳历</h2>
 <h4 id="算法设计"><strong>算法设计</strong></h4>
-<p>上篇讲到了阳历转阴历，我们先求出阳历日期到正月初一之间的间隔天数，这个间隔天数在阳历和阴历的增长中都是一样的，我们可以以其作为中间桥梁来进行转换．这种方式在农历转阳历中同样适用，但是由于农历的闰月存在，比如XX年Y月有闰月存在，即XX年有两个X月，所以我们必须在算法输入的时候明确指定求的是X月，还是X的闰月，然后计算对应的阳历日期．上篇中的数据结构依旧有用，如下:</p>
+<p>上篇讲到了阳历转阴历，我们先求出阳历日期到正月初一之间的间隔天数，这个间隔天数在阳历和阴历的增长中都是一样的，我们可以以其作为中间桥梁来进行转换．这种方式在农历转阳历中同样适用，但是由于农历的闰月存在，比如XX年Y月有闰月存在，即XX年有两个Y月，所以我们必须在算法输入的时候明确指定求的是Y月，还是Y的闰月，然后计算对应的阳历日期．上篇中的数据结构依旧有用，如下:</p>
 <pre><code>LUNAR_CALENDAR_TABLE = [  
 <span class="number">0x04AE53</span>,<span class="number">0x0A5748</span>,<span class="number">0x5526BD</span>,<span class="number">0x0D2650</span>,<span class="number">0x0D9544</span>,<span class="number">0x46AAB9</span>,<span class="number">0x056A4D</span>,<span class="number">0x09AD42</span>,<span class="number">0x24AEB6</span>,<span class="number">0x04AE4A</span>, # //*<span class="number">1901</span>-<span class="number">1910</span>*/  
 <span class="number">0x6A4DBE</span>,<span class="number">0x0A4D52</span>,<span class="number">0x0D2546</span>,<span class="number">0x5D52BA</span>,<span class="number">0x0B544E</span>,<span class="number">0x0D6A43</span>,<span class="number">0x296D37</span>,<span class="number">0x095B4B</span>,<span class="number">0x749BC1</span>,<span class="number">0x049754</span>, # //*<span class="number">1911</span>-<span class="number">1920</span>*/  
